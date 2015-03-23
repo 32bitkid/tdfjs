@@ -1,7 +1,5 @@
-(function() {
+(function(root) {
   'use strict';
-
-  var root = this;
 
   var __defaultAssert__ = function(a,b, msg) { if (a!==b) throw new Error(msg || a + " !== " + b); };
 
@@ -73,4 +71,4 @@
     root.tdd = tdd;
   }
 
-})();
+})(this);
