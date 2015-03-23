@@ -3,7 +3,7 @@
 
   var __defaultAssert__ = function(a,b, msg) { if (a!==b) throw new Error(msg || a + " !== " + b); };
 
-  var tdd = function(message) {
+  var tdf = function(message) {
     var tests = [];
 
     var chain = function() { throw new Error("Implementation not defined!"); };
@@ -65,11 +65,11 @@
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
-      exports = module.exports = tdd;
+      exports = module.exports = tdf;
     }
-    exports.tdd = tdd;
+    exports.tdf = tdf;
   } else {
-    root.tdd = tdd;
+    root.tdf = tdf;
   }
 
 })(this);

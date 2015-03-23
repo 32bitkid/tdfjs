@@ -1,22 +1,22 @@
 {
-  "name": "tddjs",
+  "name": "tdfjs",
   "version": "0.0.1",
-  "description": "A minimistic TDD utility",
+  "description": "Test Driven Functions. A out of the way TDD utility for minimistic development environments.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/32bitkid/tddjs.git"
+    "url": "https://github.com/32bitkid/tdfjs.git"
   },
   "keywords": [
-    "tdd"
+    "tdd", "test"
   ],
   "author": "James Holmes <32bitkid@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/32bitkid/tddjs/issues"
+    "url": "https://github.com/32bitkid/tdfjs/issues"
   },
-  "homepage": "https://github.com/32bitkid/tddjs"
+  "homepage": "https://github.com/32bitkid/tdfjs"
 }

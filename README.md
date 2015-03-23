@@ -1,6 +1,6 @@
-# tddjs
+# tdfjs
 
-`ttdjs` is an experimental runner-less [TDD](http://en.wikipedia.org/wiki/Test-driven_development)
+`tdfjs` is an experimental runner-less [TDD](http://en.wikipedia.org/wiki/Test-driven_development)
 tool for JavaScript.
 
 ## Goals
@@ -15,7 +15,7 @@ tool for JavaScript.
 ## Example
 
 ```js
-var add = tdd("A function that adds multiple numbers")
+var add = tdf("A function that adds multiple numbers")
   .when(1,1).returns(1)
   .when(2,2).returns(4)
   .when(5,-1).returns(4)
