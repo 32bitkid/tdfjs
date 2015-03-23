@@ -31,6 +31,10 @@ var add = tdf("A function that adds multiple numbers")
   });
 ```
 
+## Complements
+
+* [Proclaim](https://github.com/rowanmanning/proclaim) &ndash; A fantastic, minimal assertion library.
+
 ## Future thoughts
 
 * Test quality evaluation &ndash; analyze tests cases/arguments and warn if there are cases where behavior is not defined.
