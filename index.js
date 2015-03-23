@@ -24,6 +24,7 @@
                 var actual = impl.apply(void 0, args);
                 validator.apply(self, actual, args);
               });
+              return chain;
             },
             returns: function(expected, asserter) {
               tests.push(function(impl) {
