@@ -16,7 +16,7 @@ tool for JavaScript.
 
 ```js
 var add = tdf("A function that adds multiple numbers")
-  .when(1,1).returns(1)
+  .when(1,1).returns(2)
   .when(2,2).returns(4)
   .when(5,-1).returns(4)
   .when(1,1,1).returns(3)
