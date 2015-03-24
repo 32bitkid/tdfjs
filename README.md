@@ -3,6 +3,14 @@
 `tdfjs` is an experimental runner-less [TDD](http://en.wikipedia.org/wiki/Test-driven_development)
 tool for JavaScript.
 
+## Install
+
+With [npm](http://npmjs.org/):
+
+```
+npm install tdfjs
+```
+
 ## Goals
 
 * Minimialistic.
