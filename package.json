@@ -4,19 +4,23 @@
   "description": "Test Driven Functions. A out of the way TDD utility for minimistic development environments.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "minify": "uglifyjs -m -c -o dist/tdfjs.min.js index.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/32bitkid/tdfjs.git"
   },
   "keywords": [
-    "tdd", "test"
+    "tdd",
+    "test"
   ],
   "author": "James Holmes <32bitkid@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/32bitkid/tdfjs/issues"
   },
-  "homepage": "https://github.com/32bitkid/tdfjs"
+  "homepage": "https://github.com/32bitkid/tdfjs",
+  "devDependencies": {
+    "uglify-js": "^2.4.17"
+  }
 }
