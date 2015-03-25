@@ -22,7 +22,7 @@
             then: function(validator) {
               tests.push(function(impl) {
                 var actual = impl.apply(self, args);
-                validator.apply(self, actual, args);
+                validator.call(self, actual, args);
               });
               return chain;
             },
