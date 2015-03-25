@@ -15,6 +15,7 @@
 
     chain.describe = function(fn) {
       fn.call(chain, chain);
+      return chain;
     };
 
     chain.given = function(self) {
