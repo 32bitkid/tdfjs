@@ -13,6 +13,10 @@
       return chain;
     };
 
+    chain.describe = function(fn) {
+      fn.call(chain, chain);
+    };
+
     chain.given = function(self) {
       return {
         when: function() {
