@@ -81,8 +81,14 @@
 
   NotImplementedException = tdf.NotImplementedException = function NotImplementedException(message) { this.message = message; };
   DefinitionNotValidException = tdf.DefinitionNotValidException = function DefinitionNotValidException(message, failures) {
-    this.message = "Invalid Implementation: " + message;
-    this.failures = failures;
+    this.message = "Invalid implementation: '" + message + "'";
+    this.failures = failures || [];
+    this.toString = function() {
+      var failText = this.failures.map(function(e) {
+        return "\t\u2717 " + e.toString();
+      }).join("\n");
+      return this.message + "\n" + failText;
+    };
   };
   AssertionException = tdf.AssertionException = function AssertionException(message) { this.message = message; };
 
