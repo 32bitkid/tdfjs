@@ -1,7 +1,12 @@
 (function(root) {
   'use strict';
 
-  var __defaultAssert__ = function(a,b, msg) { if (a!==b) throw new Error(msg || a + " !== " + b); };
+  var __defaultAssert__ = (function() {
+    var TDFAssertionException = function(msg) { this._msg = msg; };
+    TDFAssertionException.prototype.toString = function() { return this._msg; }
+    return function(a,b,msg) { if (a!==b) throw new TDFAssertionException(msg || a + " !== " + b); };
+  })();
+
 
   var tdf = function(message) {
     var tests = [];
