@@ -7,6 +7,7 @@
     return function(a,b,msg) { if (a!==b) throw new TDFAssertionException(msg || a + " !== " + b); };
   })();
 
+  var defaultAssert = __defaultAssert__;
 
   var tdf = function(message) {
     var tests = [];
@@ -36,11 +37,11 @@
               });
               return chain;
             },
-            returns: function(expected, asserter) {
+            returns: function(expected, assert) {
               tests.push(function(impl) {
                 var actual = impl.apply(self, args);
-                asserter = (asserter || __defaultAssert__);
-                asserter(actual, expected);
+                assert = (assert || defaultAssert);
+                assert(actual, expected);
               });
               return chain;
             }
@@ -71,6 +72,10 @@
     };
 
     return chain;
+  };
+
+  tdf.setDefaultAssert = function(assert) {
+    defaultAssert = assert || __defaultAssert__;
   };
 
   if (typeof exports !== 'undefined') {
