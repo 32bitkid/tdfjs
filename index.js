@@ -79,18 +79,22 @@
     return chain;
   };
 
+  var getMessage = function() { return this.message; };
+
   NotImplementedException = tdf.NotImplementedException = function NotImplementedException(message) { this.message = message; };
+  NotImplementedException.prototype.toString = getMessage;
   DefinitionNotValidException = tdf.DefinitionNotValidException = function DefinitionNotValidException(message, failures) {
     this.message = "Invalid implementation: '" + message + "'";
     this.failures = failures || [];
-    this.toString = function() {
-      var failText = this.failures.map(function(e) {
-        return "\t\u2717 " + e.toString();
-      }).join("\n");
-      return this.message + "\n" + failText;
-    };
+  };
+  DefinitionNotValidException.prototype.toString = function() {
+    var failText = this.failures.map(function(e) {
+      return "\t\u2717 " + e.toString();
+    }).join("\n");
+    return this.message + "\n" + failText;
   };
   AssertionException = tdf.AssertionException = function AssertionException(message) { this.message = message; };
+  AssertionException.prototype.toString = getMessage;
 
   defaultAssert = __defaultAssert__ = function(a,b,msg) {
     if (a!==b) throw new AssertionException(msg || a + " !== " + b);
