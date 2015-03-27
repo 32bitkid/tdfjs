@@ -1,23 +1,20 @@
 (function(root) {
   'use strict';
 
-  var __defaultAssert__ = (function() {
-    var TDFAssertionException = function(msg) { this._msg = msg; };
-    TDFAssertionException.prototype.toString = function() { return this._msg; }
-    return function(a,b,msg) { if (a!==b) throw new TDFAssertionException(msg || a + " !== " + b); };
-  })();
+  var defaultAssert,
+      __defaultAssert__,
 
-  var defaultAssert = __defaultAssert__;
+      NotDefinedException,
+      DefinitionNotValidException,
+      AssertionException;
 
   var tdf = function(message) {
     var tests = [];
 
-    var chain = function() { throw new Error("Implementation not defined!"); };
-
-    chain.add = function(test) {
-      tests.push(test);
-      return chain;
+    var notImplemented = function NotImplementedException() {
+      throw new Error("Implementation not defined" + (message ? " for: '" + message + "'" : "!"));
     };
+    var chain = function() { notImplemented(); };
 
     chain.describe = function(fn) {
       fn.call(chain, chain);
@@ -37,10 +34,12 @@
               });
               return chain;
             },
-            returns: function(expected, assert) {
+            returns: function() {
+              var expected = arguments.length > 1 ? arguments[1] : arguments[0];
+              var assert = (arguments.length > 1 ? arguments[0] : defaultAssert) || defaultAssert;
+
               tests.push(function(impl) {
                 var actual = impl.apply(self, args);
-                assert = (assert || defaultAssert);
                 assert(actual, expected);
               });
               return chain;
@@ -65,13 +64,21 @@
 
       if(failures.length > 0) {
         for(var i=0;i<failures.length;i++) console.error(failures[i]);
-        throw new Error(message ? "Fail: " + message : "Fail");
+        throw new DefinitionNotValidException(message);
       }
 
       return fn;
     };
 
     return chain;
+  };
+
+  NotDefinedException = tdf.NotDefinedException = function NotDefinedException(message) { this.message = message; };
+  DefinitionNotValidException = tdf.DefinitionNotValidException = function DefinitionNotValidException(message) { this.message = message; };
+  AssertionException = tdf.AssertionException = function AssertionException(message) { this.message = message; };
+
+  defaultAssert = __defaultAssert__ = function(a,b,msg) {
+    if (a!==b) throw new AssertionException(msg || a + " !== " + b);
   };
 
   tdf.setDefaultAssert = function(assert) {
