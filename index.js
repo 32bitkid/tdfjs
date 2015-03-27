@@ -69,6 +69,7 @@
       }
 
       if(failures.length > 0) {
+        trigger("fail", [message, failures]);
         if(tdf.quietDefine) return function() { throw new DefinitionNotValidException(message, failures); };
         throw new DefinitionNotValidException(message, failures);
       }
@@ -95,7 +96,43 @@
     defaultAssert = assert || __defaultAssert__;
   };
 
+  // If true then defer `define()` errors until invoke rather than at definition.
   tdf.quietDefine = false;
+
+  // Events
+  var trigger = (function() {
+    var eventsCache = {};
+
+    tdf.on = function(name, callback, ctx) {
+      var events = eventsCache[name] || (eventsCache[name] = []);
+      events.push({cb: callback, ctx: ctx });
+    };
+
+    tdf.off = function(name, callback) {
+      var events = eventsCache[name];
+
+      // Return if no events
+      if(!events) return;
+
+      // If no callback, then clean all events
+      if(!callback) return eventCache[name] = [], void 0;
+
+      // find and remove the matching callback
+      for(var idx = events.length - 1; idx >= 0; idx--) {
+        if(events[idx].cb === callback) break;
+      }
+      if(idx !== -1) events.splice(idx, 1);
+    }
+
+    return function trigger(name, args) {
+      var events = eventsCache[name];
+      if (!events) return;
+      for(var i=0;i<events.length;i++) {
+        var e = events[i];
+        e.cb.apply(e.ctx, args);
+      }
+    };
+  })();
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
