@@ -4,7 +4,6 @@
   var defaultAssert,
       __defaultAssert__,
 
-      NotDefinedException,
       DefinitionNotValidException,
       AssertionException,
       NotImplementedException;
@@ -81,7 +80,6 @@
   };
 
   NotImplementedException = tdf.NotImplementedException = function NotImplementedException(message) { this.message = message; };
-  NotDefinedException = tdf.NotDefinedException = function NotDefinedException(message) { this.message = message; };
   DefinitionNotValidException = tdf.DefinitionNotValidException = function DefinitionNotValidException(message, failures) {
     this.message = "Invalid Implementation: " + message;
     this.failures = failures;
