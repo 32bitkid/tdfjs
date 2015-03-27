@@ -6,13 +6,14 @@
 
       NotDefinedException,
       DefinitionNotValidException,
-      AssertionException;
+      AssertionException,
+      NotImplementedException;
 
   var tdf = function(message) {
     var tests = [];
 
-    var notImplemented = function NotImplementedException() {
-      throw new Error("Implementation not defined" + (message ? " for: '" + message + "'" : "!"));
+    var notImplemented = function () {
+      throw new NotImplementedException("Implementation not defined" + (message ? " for: '" + message + "'" : "!"));
     };
     var chain = function() { notImplemented(); };
 
@@ -22,31 +23,36 @@
     };
 
     chain.given = function(self) {
-      return {
-        when: function() {
-          var args = Array.prototype.slice.call(arguments);
+      var givenChain = function() { notImplemented(); };
 
-          return {
-            then: function(validator) {
-              tests.push(function(impl) {
-                var actual = impl.apply(self, args);
-                validator.call(self, actual, args);
-              });
-              return chain;
-            },
-            returns: function() {
-              var expected = arguments.length > 1 ? arguments[1] : arguments[0];
-              var assert = (arguments.length > 1 ? arguments[0] : defaultAssert) || defaultAssert;
+      givenChain.when = function() {
+        var args = Array.prototype.slice.call(arguments);
 
-              tests.push(function(impl) {
-                var actual = impl.apply(self, args);
-                assert(actual, expected);
-              });
-              return chain;
-            }
-          };
-        }
+        var whenChain = function() { notImplemented(); };
+
+        whenChain.then = function(validator) {
+          tests.push(function(impl) {
+            var actual = impl.apply(self, args);
+            validator.call(self, actual, args);
+          });
+          return chain;
+        };
+
+        whenChain.returns = function() {
+          var expected = arguments.length > 1 ? arguments[1] : arguments[0];
+          var assert = (arguments.length > 1 ? arguments[0] : defaultAssert) || defaultAssert;
+
+          tests.push(function(impl) {
+            var actual = impl.apply(self, args);
+            assert(actual, expected);
+          });
+          return chain;
+        };
+
+        return whenChain;
       };
+
+      return givenChain;
     };
 
     chain.when = function() { return chain.given(void 0).when.apply(void 0, arguments); };
@@ -72,6 +78,7 @@
     return chain;
   };
 
+  NotImplementedException = tdf.NotImplementedException = function NotImplementedException(message) { this.message = message; };
   NotDefinedException = tdf.NotDefinedException = function NotDefinedException(message) { this.message = message; };
   DefinitionNotValidException = tdf.DefinitionNotValidException = function DefinitionNotValidException(message, failues) {
     this.message = "Invalid Implementation: " + message;

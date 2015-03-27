@@ -2,9 +2,25 @@ var tdf = require('./../index.js');
 var expect = require('chai').expect;
 
 describe("describing a function with no definition", function() {
-  it("should throw if you try to use it", function() {
-    var fn = tdf("a noop function");
-    expect(function() { fn(); }).to.throw();
+  describe("should throw if you try to use it", function() {
+
+    it("with nothing", function() {
+      var fn = tdf("a noop function");
+      expect(fn).to.throw(tdf.NotImplementedException);
+    });
+
+    it("after a `given()`", function() {
+      var fn = tdf("a noop function")
+        .given({});
+      expect(fn).to.throw(tdf.NotImplementedException);
+    });
+
+    it("after a `when()`", function() {
+      var fn = tdf("a noop function")
+        .when();
+      expect(fn).to.throw(tdf.NotImplementedException);
+    });
+
   });
 });
 
