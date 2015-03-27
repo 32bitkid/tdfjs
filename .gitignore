@@ -1,3 +1,5 @@
+*.sublime-workspace
+
 # Logs
 logs
 *.log
