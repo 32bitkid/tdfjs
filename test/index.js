@@ -75,6 +75,34 @@ describe("invalid definitions", function() {
     });
   });
 
+  describe("when quiet", function() {
+    before(function() {
+      tdf.quietDefine = true;
+    });
+
+    it("should not throw on define", function() {
+      expect(function() {
+        tdf("an adder")
+          .when(2,2).returns(5)
+          .define(function(a,b) { return a + b ; });
+      }).not.to.throw();
+    });
+
+    it("should throw on invoke", function() {
+      var fn = tdf("an adder")
+          .when(2,2).returns(5)
+          .define(function(a,b) { return a + b ; });
+
+      expect(function() {
+        fn(1,2);
+      }).to.throw(tdf.DefinitionNotValidException);
+    });
+
+    after(function() {
+      tdf.quietDefine = false;
+    });
+  })
+
 });
 
 describe("functions that have multiple validations", function() {

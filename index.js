@@ -69,6 +69,7 @@
       }
 
       if(failures.length > 0) {
+        if(tdf.quietDefine) return function() { throw new DefinitionNotValidException(message, failures); };
         throw new DefinitionNotValidException(message, failures);
       }
 
@@ -93,6 +94,8 @@
   tdf.setDefaultAssert = function(assert) {
     defaultAssert = assert || __defaultAssert__;
   };
+
+  tdf.quietDefine = false;
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
