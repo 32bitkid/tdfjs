@@ -4,6 +4,7 @@
   "description": "Test Driven Functions. A out of the way TDD utility for minimistic development environments.",
   "main": "index.js",
   "scripts": {
+    "test": "mocha test/",
     "minify": "uglifyjs -m -c -o dist/tdfjs.min.js index.js"
   },
   "repository": {
@@ -21,6 +22,8 @@
   },
   "homepage": "https://github.com/32bitkid/tdfjs",
   "devDependencies": {
+    "chai": "^2.2.0",
+    "mocha": "^2.2.1",
     "uglify-js": "^2.4.17"
   }
 }
