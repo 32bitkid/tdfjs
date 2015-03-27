@@ -73,6 +73,7 @@
         throw new DefinitionNotValidException(message, failures);
       }
 
+      trigger("pass", [message]);
       return fn;
     };
 
