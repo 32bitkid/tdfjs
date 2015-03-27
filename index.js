@@ -63,8 +63,7 @@
       }
 
       if(failures.length > 0) {
-        for(var i=0;i<failures.length;i++) console.error(failures[i]);
-        throw new DefinitionNotValidException(message);
+        throw new DefinitionNotValidException(message, failures[i]);
       }
 
       return fn;
@@ -74,7 +73,10 @@
   };
 
   NotDefinedException = tdf.NotDefinedException = function NotDefinedException(message) { this.message = message; };
-  DefinitionNotValidException = tdf.DefinitionNotValidException = function DefinitionNotValidException(message) { this.message = message; };
+  DefinitionNotValidException = tdf.DefinitionNotValidException = function DefinitionNotValidException(message, failues) {
+    this.message = "Invalid Implementation: " + message;
+    this.failures = failures;
+  };
   AssertionException = tdf.AssertionException = function AssertionException(message) { this.message = message; };
 
   defaultAssert = __defaultAssert__ = function(a,b,msg) {
