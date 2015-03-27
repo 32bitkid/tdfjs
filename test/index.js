@@ -1,5 +1,6 @@
 var tdf = require('./../index.js');
 var expect = require('chai').expect;
+var assert = require('chai').assert;
 
 describe("describing a function with no definition", function() {
   describe("should throw if you try to use it", function() {
@@ -114,6 +115,45 @@ describe("functions that use `this`", function() {
         })
         .define(function() { this.foo++; });
     }).not.to.throw();
+  });
+
+});
+
+describe("`returns` asserter", function() {
+
+  describe("the default asserter", function() {
+    it("should work for value types", function() {
+      expect(function() {
+        tdf("a function")
+          .when(1).returns(1)
+          .define(function(a){ return a; });
+      }).not.to.throw();
+    });
+
+    it("should work for references", function() {
+      expect(function() {
+        var obj = {a:1};
+        tdf("a function")
+          .when(obj).returns(obj)
+          .define(function(a){ return a; });
+      }).not.to.throw();
+    });
+
+    it("should not work for deep equality", function() {
+      expect(function() {
+        tdf("a function")
+          .when([1]).returns([1])
+          .define(function(a){ return a; });
+      }).to.throw(tdf.DefinitionNotValidException);
+    });
+  });
+
+  it("should allow custom asserters", function() {
+    expect(function() {
+      tdf("a function")
+        .when([1]).returns(assert.deepEqual, [1])
+        .define(function(a){ return a; });
+    }).not.to.throw(tdf.DefinitionNotValidException);
   });
 
 });
