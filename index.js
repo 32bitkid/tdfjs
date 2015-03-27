@@ -27,7 +27,7 @@
     chain.given = function(self) {
       return {
         when: function() {
-          var args = arguments;
+          var args = Array.prototype.slice.call(arguments);
 
           return {
             then: function(validator) {
