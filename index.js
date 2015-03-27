@@ -8,6 +8,10 @@
       AssertionException,
       NotImplementedException;
 
+  var getStack = function() {
+    return tdf.tryStack ? ((new Error()).stack || []).split("\n").slice(3).join("\n") : undefined;
+  };
+
   var tdf = function(message) {
     var tests = [];
 
@@ -30,20 +34,36 @@
         var whenChain = function() { notImplemented(); };
 
         whenChain.then = function(validator) {
+          var stack = getStack();
           tests.push(function(impl) {
-            var actual = impl.apply(self, args);
-            validator.call(self, actual, args);
+            try {
+              var actual = impl.apply(self, args);
+              validator.call(self, actual, args);
+            } catch (ex) {
+              throw new (function TDFValidationException() {
+                this.innerException = ex;
+                this.toString = function() { return ex.toString() + (stack ? "\n" + stack : ''); }
+              })();
+            }
           });
           return chain;
         };
 
         whenChain.returns = function() {
+          var stack = getStack();
           var expected = arguments.length > 1 ? arguments[1] : arguments[0];
           var assert = (arguments.length > 1 ? arguments[0] : defaultAssert) || defaultAssert;
 
           tests.push(function(impl) {
-            var actual = impl.apply(self, args);
-            assert(actual, expected);
+            try {
+              var actual = impl.apply(self, args);
+              assert(actual, expected);
+            } catch (ex) {
+              throw new (function TDFValidationException() {
+                this.innerException = ex;
+                this.toString = function() { return ex.toString() + (stack ? "\n" + stack : ''); }
+              })();
+            }
           });
           return chain;
         };
@@ -91,8 +111,8 @@
   DefinitionNotValidException.prototype.toString = function() {
     var failText = this.failures.map(function(e) {
       return "\t\u2717 " + e.toString();
-    }).join("\n");
-    return this.message + "\n" + failText;
+    }).join("\n\n");
+    return this.message + "\n\n" + failText;
   };
   AssertionException = tdf.AssertionException = function AssertionException(message) { this.message = message; };
   AssertionException.prototype.toString = getMessage;
@@ -107,6 +127,9 @@
 
   // If true then defer `define()` errors until invoke rather than at definition.
   tdf.quietDefine = false;
+
+  // Try to get stack traces
+  tdf.tryStack = false;
 
   // Events
   var trigger = (function() {
