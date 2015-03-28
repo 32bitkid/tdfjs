@@ -126,7 +126,7 @@
   };
 
   // If true then defer `define()` errors until invoke rather than at definition.
-  tdf.quietDefine = false;
+  tdf.quietDefine = true;
 
   // Try to get stack traces
   tdf.tryStack = false;
