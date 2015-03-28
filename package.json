@@ -1,6 +1,6 @@
 {
   "name": "tdfjs",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Test Driven Functions. A out of the way TDD utility for minimistic development environments.",
   "main": "index.js",
   "scripts": {
