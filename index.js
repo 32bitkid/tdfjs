@@ -147,7 +147,7 @@
       if(!events) return;
 
       // If no callback, then clean all events
-      if(!callback) return eventCache[name] = [], void 0;
+      if(!callback) return eventsCache[name] = [], void 0;
 
       // find and remove the matching callback
       for(var idx = events.length - 1; idx >= 0; idx--) {
