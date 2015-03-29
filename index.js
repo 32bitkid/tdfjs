@@ -18,6 +18,7 @@
     var notImplemented = function () {
       throw new NotImplementedException("Implementation not defined" + (message ? " for: '" + message + "'" : "!"));
     };
+
     var chain = function() { notImplemented(); };
 
     chain.describe = function(fn) {
