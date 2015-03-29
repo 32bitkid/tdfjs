@@ -13,7 +13,7 @@ npm install tdfjs
 
 ## Goals
 
-* Minimialistic.
+* Minimialistic. 2.2k minified/0.9k gziped.
 * No test-runner, evaluating the code verifies the behavior.
 * Suitable for testing front end prototypes, e.g. [codepen.io](http://codepen.io), [jsbin.com](http://jsbin.com), [jsfiddle.net](http://jsfiddle.net).
 * Focuses tests the smallest unit of work &ndash; a single function.
