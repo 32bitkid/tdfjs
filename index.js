@@ -98,6 +98,7 @@
       return fn;
     };
 
+    trigger("pending", [message]);
     return chain;
   };
 
